@@ -6,12 +6,20 @@
 // array elements are always stored in a continues loacation.
 // lets say if we put size of an array 5 and initialize only 2 elements then compiler will itself initialize other 3 elements as 0.
 
+// Alternate way to initialize an array:  ( Method name: Initializer list initialization) can be used for normal variable also.
+// int arr[3] = {123, 1234, 12345} ---is equivalent to--- int arr[3] {123, 1234, 12345}
+
+// Similarly, int x {10} ---is equivalent to--- int x = 10
+
+
+//-------------------------------Sizeof an Array
+
 /*
 #include <iostream>
 using namespace std;
 int main()
 { 
-
+ 
 
     int n;
 	
@@ -30,43 +38,343 @@ int main()
 */
 
 // ------------------------------------------------ Array Traversal
-// using 2 methods ( both using for loop )
 
-// method 1: using normal for loop
+// using Two methods ( both using for loop and Range based for loop )
+
 /*
-#include <iostream>
-using namespace std;
+// METHOD 1: using normal for loop
 
+#include <iostream>
+using namespace std; 
 int main()
 {
-	int n;
-	cout<<"enter the value of n\n";
-	cin>>n;
-	int array[n] = {1,2,3,4,5,6,7,8,9};
+	int sample_array [12] {1,2,3,4,5,6,7,8,9};
+	cout<< "The size of the array is " << sizeof sample_array / sizeof sample_array [0]<< "\n";
+	int x = sizeof sample_array / sizeof sample_array [0];
 	
-	int m = sizeof (array)/ sizeof (array [0]);
-	
-	for (int i = 0; i<m;i++)
-	{
-		cout<< array[i]<<" ";
-		
-	}
+	for (int i = 0;i<x; i++)
+	    {
+	    	cout<< sample_array [i] << " ";
+		}
 	return 0;
 }
-*/
 
-// method 2: using range based for loop
-// idky range based loop is not working 
+
+// METHOD 2: using Range based for loop
+// Range-based for loop in C++ is added since C++ 11.  
 
 #include <iostream>
 using namespace std;
 int main()
 {
 	int array[5]={1,2,34,4,5};
+	for (int x:array)   // every element of this array will be assigned to this variable x, one by one.
+	{
+		cout<< x << " "; // this statement will print every value of x, one by one.
+	}
+	return 0;
+}
+*/
+
+// -------------------------------------------- Modification During Traversal 
+
+// Question: Print twice the value of elements in an array.
+
+// using 2 methods ( both using for loop and Range based for loop )
+/*
+// METHOD 1: using normal for loop
+#include <iostream>
+using namespace std; 
+int main()
+{
+	int array[3]{1,2,3};
+	for (int i; i<3;i++) // i less than 3, because I already know the array size.
+	{
+		cout<< array[i] << ", ";
+		for (int i;i<3;i++);
+		{
+			cout<<"twice will be "<< array[i]*2 << " \n";
+		}
+	
+	}
+	return 0;
+}
+
+// METHOD 2: using Ranged based for loop
+
+#include <iostream>
+using namespace std;
+int main()
+{
+	int array[3] {1,2,3};
 	for (int x:array)
 	{
-		cout<< x << " ";
+		cout<< x*2<<"\n";
 	}
+	return 0;
+}
+*/
+
+// ---------------------------------------- Different Types of Arrays
+/*
+There are Two types of arrays in c++
+
+1:  Fixed sized arrays :-
+
+                   --->  Allocated in Function call stack. ( memory is no more when function call is over )
+                         int arr[100];
+                         int arr[n];
+                         int arr[] = {10,20,30};
+                         
+                   --->  Allocated in Heap.  ( memory is still available when function call is over )
+                         int *arr = new int[n];
+
+    
+2:  Dynamic sized arrays :-
+
+                   --->  Vector in C++ Standard template library 
+                   
+// In python language List is an example of dynamic sized array.
+*/
+
+// Question: find if an array is sorted or not
+
+/*
+
+#include <iostream>
+using namespace std;
+
+bool sorted_or_not(int n, int array[])
+{
+	for (int i = 1;i<n;i++)
+	{
+		if (array[i] < array[i-1])
+	    return false;
+	}
+	
+	return true;
+	
+}
+
+int main()
+{
+	int n;
+	cout<< "enter the no. of elements in the array\n";
+	cin>> n;
+	
+	cout<< "enter the elements in the array\n";
+	int array [n] ;
+	{
+		for(int i = 0; i<n;i++)
+		cin>> array[i];
+	}
+	
+	if (sorted_or_not(n,array)==true)
+	cout<< "Sorted\n";
+	else
+	cout<<"Not Sorted\n";
+	return 0;	
+	
+}
+*/
+
+// Question: Find the maximum elements in an array.
+
+/*
+#include <iostream>
+using namespace std;
+
+int find_max(int array[],int n) // Function to find the max element 
+{
+	
+	int max = array[0];
+	for (int i=0; i<n; i++)
+	{
+		if (max < array[i])
+		max = array[i];
+	}
+	
+	return max;
+}
+
+int main()
+{
+	int n;
+	cout<<"Enter the total elements of the array\n";
+	cin>>n;
+	
+	int array[n];
+	cout<<"Enter the elemets of the array\n";
+	for (int i = 0; i<n; i++)
+	cin>>array[i];
+	
+	int max = find_max(array, n); // Calling the function in variable max;
+	cout<<"The max elemet of the array is " << max << "\n";
+	
+	return 0;
+	
+}
+*/
+
+//------------------------------------------------ References in Cpp
+
+/*
+
+//------------------------- Introduction
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int x = 10;
+	int &y = x; // Here by adding ampersend(&) with y means we are referecing y. 
+	            //assigning x to &y means, we are referencing y to x;
+	            
+	cout<< x << "\n";
+	cout<<y << "\n";
+	x = x + 5;
+	cout<< x << "\n";
+	y += 5;             // if we change y, x will change;
+	cout<< y<<"\n";
+	
+	x = x + 5;
+	cout<< y << "\n";  // if we change x, y will change;
+	
+}
+*/
+// ----------------------- Applications
+
+/*
+// --------> Application 1: To modify a passed parameter
+
+#include<iostream>
+using namespace std;
+
+int swap(int &x, int &y)   ( if we remove " & " : the x and y will not swap because this x and y refer to a diff. location ) 
+{
+   int temp = x;             (NOTE: by default: Parameters are passed by value in cpp )
+   x = y;
+   y = temp;	           ( here x and y are same variables, as in the main funcion as explained in the above eg.)
+}
+
+int main()
+{
+   int x = 10, y = 15;
+   swap(x,y); 
+   cout<< x <<" " << y;
+   return 0;
+}
+*/
+
+
+/*
+// --------> Application 2: Avoiding copy of large objects during funcion calls.
+
+#include<iostream>
+#include <vector>
+
+using namespace std;
+
+void print(vector<int> &v) // if we remove "&" then a new copy of 1000 elements will be created in a new vector v.
+                           // but if use reference then it will save memory and cpu time.
+
+// ---> void print(  const  vector<int> &v) <--- if our purpose is just to access the elements and not to modify, then we add " const ".
+	for(auto x:v)           
+	cout<<x<<" ";
+	
+}
+
+int main()
+{
+    vector<int> v;
+    for(int i= 0; i<1000; i++)
+    v.push_back(i);
+    print(v);
+    return 0;	
+}
+*/
+
+// --------> Application 3: Modification in for each loop.
+
+/*
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+
+//---------> Our goal is to modify the vector <---------
+
+	vector<int> vect{10,20,30,40}; 
+	
+    for (auto &x : vect) // -------- without "&" with x the vector will not change. 
+                         // -------- because then x is just a copy of the elements of the vector.
+                         
+    x = x+5;  // here by changing x we can change the vector because x is referencing to the element of the vector ( because it is just an alias; sharing same memory location ).
+    
+    for (auto x : vect) 
+    cout<< x <<" ";
+    
+    return 0;
+}
+*/
+
+/*
+// --------> Application: applying the learning of application 1 and 2.
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	vector <string> vect{"apple","orange","banana"};
+	for(const auto &x : vect)
+	cout<< x << " ";
+	return 0;
+}
+*/
+
+// -----------------------Practice Questions
+
+// Question 1
+
+/*
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int x = 20, z = 30;
+	int &y = x; 
+	
+	y = z;                // reference can be only performed once to a variable. But their values are mutable and can be reassigned.
+	y = y + 5;
+	cout<< x << " "<< y << " "<<z <<"\n";
+	return 0;
+}
+*/
+
+// Question 2
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int &fun()
+{
+	static int x = 10;
+	return x;
+}
+
+int main();
+{
+	int &z = fun();
+	cout<< fun() << " ";
+	z = 30;
+	cout<< fun();
 	return 0;
 }
 
