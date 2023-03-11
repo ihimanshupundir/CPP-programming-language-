@@ -338,7 +338,7 @@ int main()
 
 // -----------------------Practice Questions
 
-// Question 1
+// Question 1: Guess the output
 
 /*
 #include <iostream>
@@ -350,22 +350,23 @@ int main()
 	int x = 20, z = 30;
 	int &y = x; 
 	
-	y = z;                // reference can be only performed once to a variable. But their values are mutable and can be reassigned.
+	y = z;                // reference can only be assigned once. But their values are mutable and can be reassigned.
 	y = y + 5;
 	cout<< x << " "<< y << " "<<z <<"\n";
 	return 0;
 }
 */
 
-// Question 2
+// Question 2: Guess the output
 
+/*
 #include <iostream>
 #include <vector>
 using namespace std;
 
-int &fun()
+int &fun()  // this function return the reference to a local static variable.  [ NOTE: Static variable exist when function call is over ]
 {
-	static int x = 10;
+	static int x = 10; // NOTE: We should never return reference to a non-static local variable. because non-static local variable does not exist when function call is over.
 	return x;
 }
 
@@ -377,6 +378,37 @@ int main();
 	cout<< fun();
 	return 0;
 }
+*/
+
+// ------------> SUMMARY: here are some important points about references.
+
+
+// 1: Create an alias : references share same memory loacation, so it act as a second name for a variable with benefits.
+
+// 2: Must be assigned when declared: references are internally implemented as constant pointer.
+
+        /* this means:
+        
+            ----> Correct reference
+            
+            	int x = 10; // First we need a variable to reference to. 
+	            int &y = x; 
+        */
+        
+        /* this means:
+        
+            ----> Incorrect reference
+            
+            	int &y;     // We can't leave it unassigned. Also we need to create x before y.
+	            int x = 10;  
+	            y = x;
+        */
+
+// 3: Cannot refer to another location: it is not like pointer, Pointer can be changed to other memory locaion.
+
+// 4: Cannot be NULL: ----> int &y = null <---- this is incorrect.
+
+// 5: Safer and Easy to use: -------> if compared to pointer.
 
 
 
