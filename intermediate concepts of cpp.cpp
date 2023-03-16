@@ -241,7 +241,38 @@ int main()
 	cout<< y << "\n";  // if we change x, y will change;
 	
 }
+
+// ------------> SUMMARY: here are some important points about references.
+
+
+// 1: it Creates an alias : references share same memory loacation, so it act as a second name for a variable with benefits.
+
+// 2: Must be assigned when declared: references are internally implemented as constant pointer.
+
+        /* this means:
+        
+            ----> Correct reference
+            
+            	int x = 10; // First we need a variable to reference to. 
+	            int &y = x; 
+        */
+        
+        /* this means:
+        
+            ----> Incorrect reference
+            
+            	int &y;     // We can't leave it unassigned. Also we need to create x before y.
+	            int x = 10;  
+	            y = x;
+        
+
+// 3: Cannot refer to another location: it is not like pointer, Pointer can be changed to other memory locaion.
+
+// 4: Cannot be NULL: ----> int &y = null <---- this is incorrect.
+
+// 5: Safer and Easy to use: -------> if compared to pointer.
 */
+
 // ----------------------- Applications
 
 /*
@@ -294,7 +325,7 @@ int main()
 }
 */
 
-// --------> Application 3: Modification in for each loop.
+// --------> Application 3: Modification in, for each loop.
 
 /*
 #include <iostream>
@@ -380,42 +411,93 @@ int main();
 }
 */
 
-// ------------> SUMMARY: here are some important points about references.
 
+// ------------------- Funtion parameters & References 
 
-// 1: Create an alias : references share same memory loacation, so it act as a second name for a variable with benefits.
+//------ Problems with normal parameter passing ( Two Problems )
 
-// 2: Must be assigned when declared: references are internally implemented as constant pointer.
+// Problem 1: Changes are not relected outside the function. Example: guess the output of the below program.
+/*
+#include <iostream>
+#include <vector>
+using namespace std;
 
-        /* this means:
-        
-            ----> Correct reference
-            
-            	int x = 10; // First we need a variable to reference to. 
-	            int &y = x; 
-        */
-        
-        /* this means:
-        
-            ----> Incorrect reference
-            
-            	int &y;     // We can't leave it unassigned. Also we need to create x before y.
-	            int x = 10;  
-	            y = x;
-        */
+void fun(int x)
+{
+	x = x + 5;
+}
 
-// 3: Cannot refer to another location: it is not like pointer, Pointer can be changed to other memory locaion.
+int main()
+{
+	int x = 10;
+	fun(x);
+	cout<< x; // here the output will be 10, not 15 because both x are different and they label to different location.
+	return 0;
+}
+*/
 
-// 4: Cannot be NULL: ----> int &y = null <---- this is incorrect.
+//-------> Correction <------
+/*
+#include <iostream>
+#include <vector>
+using namespace std;
 
-// 5: Safer and Easy to use: -------> if compared to pointer.
+void fun(int &x) // <-------- &x is referencing to x.
+{
+	x = x + 5;
+}
 
+int main()
+{
+	int x = 10;
+	fun(x);
+	cout<< x; // now the output will be 15 because they label to the same memory location .
+	return 0;
+}
+*/
 
+// 2: Performance issue. The whole object is copied ( consider passing a large object like a large string ). 
+/*
+#include <iostream>
+#include <iostream>
+using namespace std;
 
+void fun(string s) // ---------> the string s in void fun and string s in the main function are different.
+{
+	cout<< s;
 
+}                 // -----> when we heave a large string and we pass it by value ( default in C++ ), 
+                      //--->  a copy of object is created. a new object is constructed here; which is a performance issue.
 
+int main()
+{
+	string s = " a very very very very very very long string";
+	fun (s);
+	return 0;
+}
+*/
 
+//-------> Correction <------
+// 2: Performance issue resolved. This is called Performance optimization. 
+/*
+#include <iostream>
+#include <iostream>
+using namespace std;
 
+void fun(const string &s) // <--------- the string &s is referencing to s. Const: for better readability.
+{                         
+	cout<< s;
+
+}                 
+                      //--->  s and &s are the label to the same memory location .
+
+int main()
+{
+	string s = " a very very very very very very long string";
+	fun (s);
+	return 0;
+}
+*/
 
 
 
