@@ -495,6 +495,7 @@ int main()
 {
 	string s = " a very very very very very very long string";
 	fun (s);
+	
 	return 0;
 }
 */
