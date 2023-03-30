@@ -9,7 +9,7 @@
 // Alternate way to initialize an array:  ( Method name: Initializer list initialization) can be used for normal variable also.
 // int arr[3] = {123, 1234, 12345} ---is equivalent to--- int arr[3] {123, 1234, 12345}
 
-// Similarly, int x {10} ---is equivalent to--- int x = 10
+// Similarly, int x {10} <--- is equivalent to ---> int x = 10
 
 
 //-------------------------------Sizeof an Array
@@ -34,7 +34,6 @@ int main()
 	cout<<n;	
 	return 0;	
 } 
-
 */
 
 // ------------------------------------------------ Array Traversal
@@ -80,9 +79,9 @@ int main()
 
 // Question: Print twice the value of elements in an array.
 
-// using 2 methods ( both using for loop and Range based for loop )
+// using Two methods ( both using for loop and Range based for loop )
 /*
-// METHOD 1: using normal for loop
+// METHOD 1: using normal for loop 
 #include <iostream>
 using namespace std; 
 int main()
@@ -459,14 +458,13 @@ int main()
 // 2: Performance issue. The whole object is copied ( consider passing a large object like a large string ). 
 /*
 #include <iostream>
-#include <iostream>
 using namespace std;
 
 void fun(string s) // ---------> the string s in void fun and string s in the main function are different.
 {
 	cout<< s;
 
-}                 // -----> when we heave a large string and we pass it by value ( default in C++ ), 
+}                 // -----> when we heave a large string and we pass it by value ( default in C++ ), When you dont pass them by references then that means they are passed by value.
                       //--->  a copy of object is created. a new object is constructed here; which is a performance issue.
 
 int main()
@@ -481,7 +479,6 @@ int main()
 // 2: Performance issue resolved. This is called Performance optimization. 
 /*
 #include <iostream>
-#include <iostream>
 using namespace std;
 
 void fun(const string &s) // <--------- the string &s is referencing to s. Const: for better readability.
@@ -495,11 +492,84 @@ int main()
 {
 	string s = " a very very very very very very long string";
 	fun (s);
+	return 0;
+}
+*/
+
+// ------( application 4 )-------------------------> Range based For loop and References
+
+/* 
+    --> Range based for loops are used to traverse through a container, a container can be an array, vector, string or any other ( we will study them in STL ).
+    --> In a container there are muliple ways of traversal and range based for loops are super easy to write.
+*/
+
+// Problems with the normal loop vaiables (Two problems): 
+
+// Problem 1: Can not change elements.
+/*
+#include <iostream>
+using namespace std;
+int main()
+{
+	int arr[] = {10,20,30,40};
+	
+	for (int x: arr) // <------- This x contains a copy of the array arr.
+	x = x*2;         //    <----- Because x contains a copy so the value of the orignal array will not be modified.
+	
+	for (int x: arr)
+	cout << x << " ";  // So the output will be 10 20 30 40 
 	
 	return 0;
 }
 */
 
+//-------> Correction <------
+
+/*
+#include <iostream>
+using namespace std;
+int main()
+{
+	int arr[] = {10,20,30,40};
+	
+	for (int &x: arr) // <------ Now x is the label (reference) to the same memory location as arr. So the values in the arr will be modified.
+	x = x*2;            
+	
+	for (int x: arr)
+	cout << x << " ";  
+	
+	return 0;
+}
+*/
+
+// Problem 2: Performance issues.
+/*
+#include <iostream>
+using namespace std;
+int main()
+{
+	string arr[] = {"Performance issue with range based for loops and references"};
+	
+	for (auto s: arr) // here if we have a large string in arr then the whole large string will be copied in s: This is a performance issue.
+	cout<<s<<"\n";      
+	return 0;
+}
+*/
+
+//-------> Correction <------
+
+/*
+#include <iostream>
+using namespace std;
+int main()
+{
+	string arr[] = {"Performance issue resolved with range based for loops and references"};
+	
+	for (const auto &s: arr) // Const: for better redability.   &s: to avoid making the copy of arr.  Hence performance issue resolved.
+	cout<<s<<"\n";      
+	return 0;
+}
+*/
 
 
 
